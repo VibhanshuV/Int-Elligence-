@@ -81,7 +81,7 @@ public class ObjectDetection extends AppCompatActivity {
                 waitingDialogue.show();
                 Bitmap bitmap = cameraKitImage.getBitmap();
                 bitmap = Bitmap.createScaledBitmap(bitmap, cameraView.getWidth() , cameraView.getHeight() , false);
-                cameraView.stop();                                                                                              //to stop camera after the image gets captured
+                cameraView.stop();                                                                                              //To stop camera after the image gets captured
 
                 runDetector(bitmap);
 
@@ -167,6 +167,8 @@ public class ObjectDetection extends AppCompatActivity {
                         // Task failed with an exception
                         // ...
                         Toast.makeText(ObjectDetection.this, "No lable found", Toast.LENGTH_SHORT).show();
+                        display.setText("No lable found");
+                        voiceOutput();
                     }
                 });
     }
