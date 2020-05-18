@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:text="Sound Settings"/>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -18,5 +23,40 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seek_bar1"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:progress="50"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="167dp" />
+
+    <SeekBar
+        android:id="@+id/seek_bar2"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:progress="50"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="278dp" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pitch"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="115dp" />
+
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Speed"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="227dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

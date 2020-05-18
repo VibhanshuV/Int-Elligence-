@@ -37,8 +37,9 @@ public class ObjectDetection extends AppCompatActivity {
     private Button detectBtn;                                                                       //button to detect
     private AlertDialog waitingDialogue;                                                            //to display waiting dialogue
     private TextToSpeech TTS;                                                                       //variable to implement text to speech
-    private TextView display;   //to display
+    private TextView display;                                                                       //to display
     private Vibrator vibrator;
+
 
     @Override
     protected void onResume() {
@@ -125,6 +126,7 @@ public class ObjectDetection extends AppCompatActivity {
     }
 
     //function to give voice output
+
     private void voiceOutput() {
 
         String text = display.getText().toString();
@@ -202,7 +204,7 @@ public class ObjectDetection extends AppCompatActivity {
         voiceOutput();         //to give voice output of detected labels
     }
 
-    /*To handle orientation changes
+    /**To handle orientation changes
     * This saves the value displayed on the textView before a change in the orientation
     * */
     @Override
