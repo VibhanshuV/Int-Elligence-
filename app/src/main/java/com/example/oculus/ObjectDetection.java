@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
-import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceImageLabelerOptions;
 import com.wonderkiln.camerakit.CameraKitError;
 import com.wonderkiln.camerakit.CameraKitEvent;
 import com.wonderkiln.camerakit.CameraKitEventListener;
@@ -37,7 +37,8 @@ public class ObjectDetection extends AppCompatActivity {
     private Button detectBtn;                                                                       //button to detect
     private AlertDialog waitingDialogue;                                                            //to display waiting dialogue
     private TextToSpeech TTS;                                                                       //variable to implement text to speech
-    private TextView display;                                                                       //to display
+    private TextView display;   //to display
+    private Vibrator vibrator;
 
     @Override
     protected void onResume() {
@@ -55,7 +56,7 @@ public class ObjectDetection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_object_detection);
-
+        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
         detectBtn = findViewById(R.id.button_detect);
         display = findViewById(R.id.display_labels);
         cameraView = findViewById(R.id.cameraView);
@@ -114,6 +115,7 @@ public class ObjectDetection extends AppCompatActivity {
         detectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(100);
                 display.setText(null);
                 cameraView.start();
                 cameraView.captureImage();
@@ -127,7 +129,7 @@ public class ObjectDetection extends AppCompatActivity {
 
         String text = display.getText().toString();
         TTS.setPitch(1);
-        TTS.setSpeechRate(1);
+        TTS.setSpeechRate(0.8f);
         TTS.speak(text,TextToSpeech.QUEUE_FLUSH,null);
 
     }
@@ -161,7 +163,7 @@ public class ObjectDetection extends AppCompatActivity {
                         }
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {                                     //if it fails following message is displayed
+                .addOnFailureListener(new OnFailureListener() {          //if it fails following message is displayed
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Task failed with an exception
@@ -173,27 +175,45 @@ public class ObjectDetection extends AppCompatActivity {
                 });
     }
 
-    private void processDataResult(List<FirebaseVisionImageLabel> labels) throws InterruptedException {                         //To display labels
+    private void processDataResult(List<FirebaseVisionImageLabel> labels) throws InterruptedException {         //to display labels
 
-        for (FirebaseVisionImageLabel label: labels) {
-            float confidence = label.getConfidence();
-            if (confidence >= 0.68){
-                String text = label.getText();
-                String entityId = label.getEntityId();
-                display.append(text + " " + "or" + " ");
+        if(labels != null) {                                    //if labels are present
+            for (FirebaseVisionImageLabel label: labels) {
+                float confidence = label.getConfidence();
+                if (confidence >= 0.68){
+                    String text = label.getText();
+                    display.append(text + " " + "or" + " ");
+                }
             }
-        }
+            //to handle last "or"
+            String string1 = display.getText().toString();
+            String string2 = string1.substring(0,string1.length()-1);
+            string1 = string2.substring(0,string2.length()-1);
+            string2 = string1.substring(0,string1.length()-1);
+            display.setText(string2);
 
-        String string1 = display.getText().toString();                                              //to remove last "or"
-        String string2 = string1.substring(0,string1.length()-1);
-        string1 = string2.substring(0,string2.length()-1);
-        string2 = string1.substring(0,string1.length()-1);
-        display.setText(string2);
+        }
+        else {                                                  //if labels are null
+            display.setText("No Objects Detected!");
+        }
 
         if(waitingDialogue.isShowing())                                                             //to remove waiting dialogue
             waitingDialogue.dismiss();
+        voiceOutput();         //to give voice output of detected labels
+    }
 
-        voiceOutput();                                                                              //to give voice output of detected labels
+    /*To handle orientation changes
+    * This saves the value displayed on the textView before a change in the orientation
+    * */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("Display Output",display.getText().toString());   //save textView output in our outstate bundle
+    }
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        display.setText(savedInstanceState.getString("Display Output"));   //receiving and displaying the value from our saved instance state bundle
     }
 }

@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/button_detect"
-        android:contentDescription="@string/detect_object"
+        android:contentDescription="Detect Object"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#4DA489"
