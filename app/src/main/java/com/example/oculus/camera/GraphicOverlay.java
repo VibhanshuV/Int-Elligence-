@@ -130,7 +130,6 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
             returnRect.top = translateY(inputRect.top);
             returnRect.right = translateX(inputRect.right);
             returnRect.bottom = translateY(inputRect.bottom);
-
             return returnRect;
         }
 
