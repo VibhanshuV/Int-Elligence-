@@ -32,9 +32,7 @@ import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 public class MenuActivity extends AppCompatActivity {
 
     private boolean voiceCommands = true;
-    private Button objectDetecBtn,textReconBtn,voiceComBtn,settingsBtn;
     private Vibrator vibrator;              //for haptic feedback
-
     //For sensors
     private SensorManager mSensorManager;
     private float mAccel;
@@ -50,15 +48,12 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ActivityCompat.requestPermissions(this,new String[] {RECORD_AUDIO}, PackageManager.PERMISSION_GRANTED);
-        //To make navigation bar transparent
-        Window window = getWindow();
-        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
-        objectDetecBtn=findViewById(R.id.objectDetc);
-        textReconBtn=findViewById(R.id.textRecon);
-        voiceComBtn=findViewById(R.id.voiceCom);
-        settingsBtn=findViewById(R.id.settings);
+        Button objectDetecBtn = findViewById(R.id.objectDetc);
+        Button textReconBtn = findViewById(R.id.textRecon);
+        Button voiceComBtn = findViewById(R.id.voiceCom);
+        Button settingsBtn = findViewById(R.id.settings);
          //For Sensor
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
@@ -106,13 +101,12 @@ public class MenuActivity extends AppCompatActivity {
                 String string = null;
                 if(matches!=null){
                     string = matches.get(0);
-                    if(string.toLowerCase().indexOf("text")!=-1) { openTextRecognizer(); }
-                    if(string.toLowerCase().indexOf("object")!=-1) {openObjectDetection();}
-                    if(string.toLowerCase().indexOf("settings")!=-1) {openSettings();}
-                    if(string.toLowerCase().indexOf("voice commands")!=-1) {openSettings();}
+                    if(string.toLowerCase().contains("text")) { openTextRecognizer(); }
+                    if(string.toLowerCase().contains("object")) {openObjectDetection();}
+                    if(string.toLowerCase().contains("settings")) {openSettings();}
+                    if(string.toLowerCase().contains("voice commands")) {openSettings();}
                     else{vibrator.vibrate(200);}
                 }
-
             }
 
             @Override
