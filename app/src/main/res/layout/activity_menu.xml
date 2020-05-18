@@ -22,7 +22,7 @@
 
     <Button
         android:id="@+id/textRecon"
-        android:contentDescription="Text Detection"
+        android:contentDescription="@string/text_detection"
         android:hapticFeedbackEnabled="true"
         android:layout_width="138dp"
         android:layout_height="159dp"
@@ -37,7 +37,7 @@
 
     <Button
         android:id="@+id/objectDetc"
-        android:contentDescription="Object Detection"
+        android:contentDescription="@string/object_detection"
         android:layout_width="138dp"
         android:layout_height="159dp"
         android:layout_marginStart="16dp"
@@ -51,7 +51,7 @@
 
     <Button
         android:id="@+id/voiceCom"
-        android:contentDescription="Voice Assistant"
+        android:contentDescription="@string/voice_assistant"
         android:layout_width="138dp"
         android:layout_height="159dp"
         android:layout_marginStart="16dp"
@@ -64,7 +64,7 @@
 
     <Button
         android:id="@+id/settings"
-        android:contentDescription="Settings"
+        android:contentDescription="@string/settings"
         android:layout_width="138dp"
         android:layout_height="159dp"
         android:layout_marginEnd="16dp"
@@ -95,5 +95,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintGuide_percent="0.5143639"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

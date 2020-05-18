@@ -12,4 +12,9 @@
     <string name="ocr_success">Text read successfully</string>
     <string name="ocr_failure">No text captured</string>
     <string name="ocr_error">"Error reading text: %1$s"</string>
+    <string name="text_detection">Text Detection</string>
+    <string name="object_detection">Object Detection</string>
+    <string name="voice_assistant">Voice Assistant</string>
+    <string name="settings">Settings</string>
+    <string name="detect_object">Detect Object</string>
 </resources>
