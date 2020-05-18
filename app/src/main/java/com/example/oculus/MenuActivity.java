@@ -104,6 +104,7 @@ public class MenuActivity extends AppCompatActivity {
                     if(string.toLowerCase().contains("text")) { openTextRecognizer(); }
                     if(string.toLowerCase().contains("object")) {openObjectDetection();}
                     if(string.toLowerCase().contains("settings")) {openSettings();}
+                    if(string.toLowerCase().contains("close app")) {exit();}
                     if(string.toLowerCase().contains("voice commands")) {openSettings();}
                     else{vibrator.vibrate(200);}
                 }
@@ -155,6 +156,10 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void exit() {
+        finish();
     }
 
 
