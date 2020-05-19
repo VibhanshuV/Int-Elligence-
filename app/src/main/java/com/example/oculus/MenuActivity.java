@@ -19,6 +19,8 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -53,6 +55,10 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        //to make navigation bar transparent
+        Window window = getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.TYPE_STATUS_BAR);
         ActivityCompat.requestPermissions(this,new String[] {RECORD_AUDIO}, PackageManager.PERMISSION_GRANTED);
 
         loadVoiceInteractionState();    //loading voice interaction status
