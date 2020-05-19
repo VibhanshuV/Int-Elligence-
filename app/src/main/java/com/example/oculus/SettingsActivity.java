@@ -10,11 +10,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
     private boolean voiceCommands = false;//voice command status
     private float sensorSensitivity = 300;
     private Vibrator vibrator;
+    private Button appInfoButton, talkBackButton;
 
 
     @Override
@@ -53,6 +57,29 @@ public class SettingsActivity extends AppCompatActivity {
         if(voiceCommands){
             sensorSensitivity = 25;
         }
+
+        appInfoButton = findViewById(R.id.appInfoBtn);
+        talkBackButton = findViewById(R.id.accessBtn);
+
+        //to open app info and talk back feature
+
+        appInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                gotoAppInfo();
+
+            }
+        });
+
+        talkBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                gotoTalkBack();
+
+            }
+        });
 
 
         //For Sensor
@@ -125,9 +152,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void gotoAppInfo() {
 
+        startActivityForResult(new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS), 0);
+
     }
 
     private void gotoTalkBack() {
+
+        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 0);
+
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
