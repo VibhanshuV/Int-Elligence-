@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -243,7 +244,9 @@ public class MenuActivity extends AppCompatActivity {
         settingsMenu.putExtra("Voice Command Status",voiceCommands);
         //Intents to Settings Activity
         startActivity(settingsMenu);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+////
+//        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_SETTINGS), 0);  //to go to app info
+//        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 0); //for accesibility setting
     }
 
 

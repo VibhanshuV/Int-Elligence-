@@ -36,9 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
     private boolean voiceCommands = false;//voice command status
     private float sensorSensitivity = 300;
     private Vibrator vibrator;
-    float speed, pitch;
-    SeekBar seekBar_speed, seekBar_pitch;
-    TextView textView ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(voiceCommands){
             sensorSensitivity = 25;
         }
-
-        seekBar_pitch = findViewById(R.id.seek_bar1);
-        seekBar_speed = findViewById(R.id.seek_bar2);
-        textView = findViewById(R.id.textView);
-        textView.setText(String.valueOf(voiceCommands));
+        
 
         //For Sensor
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -108,8 +102,8 @@ public class SettingsActivity extends AppCompatActivity {
                 String string = null;
                 if(matches!=null){
                     string = matches.get(0);
-                    if(string.toLowerCase().contains("")) { }                 //add function and keyword
-                    if(string.toLowerCase().contains("")) {}                  //add function and keyword
+                    if(string.toLowerCase().contains("talkback")) {gotoTalkBack();}                 //add function and keyword
+                    if(string.toLowerCase().contains("App Info")) {gotoAppInfo();}                  //add function and keyword
                     if(string.toLowerCase().contains("back")) {goBack();}
 
                 }
@@ -127,6 +121,13 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void gotoAppInfo() {
+
+    }
+
+    private void gotoTalkBack() {
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
@@ -163,15 +164,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void setValueOfSpeedAndPitch(){
-        speed = (float) seekBar_speed.getProgress()/50;
-        if(speed<0.1)
-            speed = 0.1f;
-
-        pitch = (float) seekBar_pitch.getProgress()/50;
-        if(pitch<0.1)
-            pitch = 0.1f;
-    }
 
     private void goBack() {    //to finish this activity
         finish();

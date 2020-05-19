@@ -21,9 +21,9 @@ public class SlideActivity extends AppCompatActivity {
         adapter = new SlideViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
-       /* if(isOpenAlready())
+        if(isOpenAlready())
         {
-            Intent intent = new Intent(SlideActivity.this,MainActivity.class);
+            Intent intent = new Intent(SlideActivity.this,MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
@@ -33,14 +33,14 @@ public class SlideActivity extends AppCompatActivity {
             editor.putBoolean("slide",true);
             editor.commit();
 
-        }*/
+        }
 
     }
 
-    /*private boolean isOpenAlready(){
+    private boolean isOpenAlready(){
 
         SharedPreferences sharedPreferences =  getSharedPreferences("slide", MODE_PRIVATE);
         boolean result = sharedPreferences.getBoolean("slide",false);
         return result;
-    }*/
+    }
 }
