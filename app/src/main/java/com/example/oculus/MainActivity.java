@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainMenu = new Intent(MainActivity.this,MenuActivity.class);
+                Intent mainMenu = new Intent(MainActivity.this,SlideActivity.class);
                 startActivity(mainMenu);
                 finish();
             }

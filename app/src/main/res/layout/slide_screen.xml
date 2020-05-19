@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/background_2" />
+
+    <TextView
+        android:id="@+id/tutorial_text1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#E5E5E5"
+        android:fontFamily="@font/regular"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:text='Press this button or say "OBJECT" to detect the object in front of your camera. '
+        android:textColor="@color/grey"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/settings"
+        app:layout_constraintEnd_toEndOf="@+id/settings"
+        app:layout_constraintStart_toStartOf="@+id/voiceCom"
+        app:layout_constraintTop_toTopOf="@+id/settings" />
+
+    <TextView
+        android:id="@+id/tutorial_text2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#E5E5E5"
+        android:fontFamily="@font/regular"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:text="Press this button to activate voice commands by shaking your phone "
+        android:textColor="@color/grey"
+        android:textSize="20dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/textRecon"
+        app:layout_constraintEnd_toEndOf="@+id/textRecon"
+        app:layout_constraintStart_toStartOf="@+id/objectDetc"
+        app:layout_constraintTop_toTopOf="@+id/textRecon" />
+
+    <ImageView
+        android:id="@+id/objectDetc"
+        android:layout_width="138dp"
+        android:layout_height="159dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/object_button"
+        android:contentDescription="Object Detection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
+
+    <ImageView
+        android:id="@+id/textRecon"
+        android:layout_width="138dp"
+        android:layout_height="159dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/text_button"
+        android:contentDescription="Text Detection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
+
+    <ImageView
+        android:id="@+id/voiceCom"
+        android:layout_width="138dp"
+        android:layout_height="159dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/voice_button"
+        android:contentDescription="Voice Assistant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.71000004"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/settings"
+        android:layout_width="138dp"
+        android:layout_height="159dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/settings_button"
+        android:contentDescription="Settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.71000004"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.50121653"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5389877" />
+
+    <Button
+        android:id="@+id/tour_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="@font/regular"
+        android:text="Take a quick tour"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="23sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.57" />
+
+    <Button
+        android:id="@+id/next_end_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="@font/regular"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.90999997" />
+
+    <Button
+        android:id="@+id/skip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="@font/regular"
+        android:text="Skip"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="23sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="@font/regular"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="23sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/indicator_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/indicator_3"
+        app:srcCompat="@drawable/selected"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/indicator_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/selected"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/indicator_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/indicator_2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tour_button"
+        app:layout_constraintVertical_bias="0.19999999"
+        app:srcCompat="@drawable/selected"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/indicator_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/indicator_2"
+        app:srcCompat="@drawable/selected"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
