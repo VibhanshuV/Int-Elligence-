@@ -198,7 +198,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {                      //finish this activity
-        vibrator.vibrate(120);
+        vibrator.vibrate(170);
         super.onBackPressed();
     }
 }

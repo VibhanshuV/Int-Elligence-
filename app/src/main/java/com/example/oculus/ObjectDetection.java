@@ -302,7 +302,6 @@ public class ObjectDetection extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         // Task failed with an exception
                         // ...
-//                        Toast.makeText(ObjectDetection.this, "No lable found", Toast.LENGTH_SHORT).show();
                         display.setText("No label found");
                     }
                 });
@@ -349,7 +348,7 @@ public class ObjectDetection extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        vibrator.vibrate(120);
+        vibrator.vibrate(170);
         super.onBackPressed();
     }
 }

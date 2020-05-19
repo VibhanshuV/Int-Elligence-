@@ -15,7 +15,6 @@
     <string name="text_detection">Text Detection</string>
     <string name="object_detection">Object Detection</string>
     <string name="voice_assistant">Voice Assistant</string>
-    <string name="settings">Settings</string>
     <string name="detect_object">Detect Object</string>
     <string name="enable_voice_assistant">Enable Voice Assistant</string>
     <string name="open_object_detection">Open Object Detection</string>
@@ -35,5 +34,6 @@
     <string name="take_a_tour_of_the_app">Take a Tour of the app.</string>
     <string name="skip_this_tour">Skip this tour</string>
     <string name="go_back_one_slide">Go back one slide</string>
+    <string name="settings">Settings</string>
 
 </resources>

@@ -266,7 +266,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void openSettings(){
-        vibrator.vibrate(100);          //haptic feedback
+        vibrator.vibrate(100);                                                              //haptic feedback
         Intent settingsMenu = new Intent(MenuActivity.this,SettingsActivity.class);     //sending the status of voice command(enabled/disabled) to Settings activity
         settingsMenu.putExtra("Voice Command Status",voiceCommands);
         //Intents to Settings Activity

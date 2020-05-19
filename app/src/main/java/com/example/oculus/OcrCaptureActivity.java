@@ -525,7 +525,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        vibrator.vibrate(120);
+        vibrator.vibrate(170);
         super.onBackPressed();
     }
 
