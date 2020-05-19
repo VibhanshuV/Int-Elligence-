@@ -16,6 +16,7 @@ import android.speech.SpeechRecognizer;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,10 +33,12 @@ public class SettingsActivity extends AppCompatActivity {
     //for speech recognition
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
-    private boolean voiceCommands;                //voice command status
+    private boolean voiceCommands = false;//voice command status
+    private float sensorSensitivity = 300;
     private Vibrator vibrator;
     float speed, pitch;
     SeekBar seekBar_speed, seekBar_pitch;
+    TextView textView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +48,18 @@ public class SettingsActivity extends AppCompatActivity {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
-        //z
+        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
+
+        Bundle bundle = getIntent().getExtras();
+        voiceCommands = bundle.getBoolean("Voice Command Status");
+        if(voiceCommands){
+            sensorSensitivity = 25;
+        }
 
         seekBar_pitch = findViewById(R.id.seek_bar1);
         seekBar_speed = findViewById(R.id.seek_bar2);
+        textView = findViewById(R.id.textView);
+        textView.setText(String.valueOf(voiceCommands));
 
         //For Sensor
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -128,7 +139,7 @@ public class SettingsActivity extends AppCompatActivity {
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 20) {
+            if (mAccel > sensorSensitivity) {
                 Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
                 speechRecognizer.startListening(intentRecognizer);
             }
@@ -168,6 +179,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        vibrator.vibrate(120);
         super.onBackPressed();
     }
 }

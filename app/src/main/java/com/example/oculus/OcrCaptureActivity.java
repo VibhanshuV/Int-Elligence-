@@ -16,6 +16,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -77,6 +78,12 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     // A TextToSpeech engine for speaking a String value.
     private TextToSpeech tts;
 
+    //for voice interaction status
+    private float sensorSensitivity = 300;
+    private boolean voiceCommands;
+
+    private Vibrator vibrator;
+
     //For sensors
     private SensorManager mSensorManager;
     private float mAccel;
@@ -97,8 +104,17 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
+        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
+
         preview = (CameraSourcePreview) findViewById(R.id.preview);
         graphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
+
+        ///to check status of voice commands and enable/disable it
+        Bundle bundle1 = getIntent().getExtras();
+        voiceCommands = bundle1.getBoolean("Voice Command Status");
+        if(voiceCommands){
+            sensorSensitivity = 25;
+        }
 
         // Set good defaults for capturing text.
         boolean autoFocus = true;
@@ -214,7 +230,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 20) {
+            if (mAccel > sensorSensitivity) {
                 Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
                 speechRecognizer.startListening(intentRecognizer);
             }
@@ -507,5 +523,10 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        vibrator.vibrate(120);
+        super.onBackPressed();
+    }
 
 }

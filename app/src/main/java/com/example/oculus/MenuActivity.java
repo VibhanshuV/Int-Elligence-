@@ -55,14 +55,15 @@ public class MenuActivity extends AppCompatActivity {
         voiceComBtn = findViewById(R.id.voiceCom);
         Button settingsBtn = findViewById(R.id.settings);
          //For Sensor
-//        if(voiceCommands){//to check if voice commands are activated
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        if(voiceCommands){sensorSensitivity = 20;}
-        else{sensorSensitivity = 300;}
         Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         mAccel = 10f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
+
+        //sensor enabled/disabled according to voiceCommand status
+        if(voiceCommands) {sensorSensitivity = 25;}
+        else{sensorSensitivity = 300;}
 
 
         //Setting Up Speech Recognizer
@@ -151,7 +152,7 @@ public class MenuActivity extends AppCompatActivity {
         voiceComBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrator.vibrate(150);
+                vibrator.vibrate(500);
                 toggleVoiceCommands();
                 if(voiceCommands == false) {                      //if voice command in deactivated
                     mSensorManager.unregisterListener(mSensorListener);                    //unregisters sensor manager
@@ -257,11 +258,15 @@ public class MenuActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         voiceCommands = savedInstanceState.getBoolean(savedInstanceState.getString("Voice Command Status"));   //receiving and displaying the value from our saved instance state bundle
-        if(!voiceCommands) {
-            mSensorManager.unregisterListener(mSensorListener);
-            voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
-            voiceComBtn.setContentDescription("Enable Voice Commands");
-        }
+        if(voiceCommands) {sensorSensitivity = 25;}
+        else{sensorSensitivity = 300;}
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        vibrator.vibrate(120);
+        super.onBackPressed();
     }
 
 }
