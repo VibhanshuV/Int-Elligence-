@@ -29,11 +29,13 @@ public class MenuActivity extends AppCompatActivity {
 
     private boolean voiceCommands = true;
     private Vibrator vibrator;              //for haptic feedback
+    private Button voiceComBtn;
     //For sensors
     private SensorManager mSensorManager;
     private float mAccel;
     private float mAccelCurrent;
     private float mAccelLast;
+    private float sensorSensitivity;
 
     //for speech recognition
     private SpeechRecognizer speechRecognizer;
@@ -50,16 +52,18 @@ public class MenuActivity extends AppCompatActivity {
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
         Button objectDetecBtn = findViewById(R.id.objectDetc);
         Button textReconBtn = findViewById(R.id.textRecon);
-        final Button voiceComBtn = findViewById(R.id.voiceCom);
+        voiceComBtn = findViewById(R.id.voiceCom);
         Button settingsBtn = findViewById(R.id.settings);
          //For Sensor
 //        if(voiceCommands){//to check if voice commands are activated
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
+        if(voiceCommands){sensorSensitivity = 20;}
+        else{sensorSensitivity = 300;}
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         mAccel = 10f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
-//        }
+
 
         //Setting Up Speech Recognizer
         intentRecognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -105,7 +109,11 @@ public class MenuActivity extends AppCompatActivity {
                     if(string.toLowerCase().contains("object")) {openObjectDetection();}
                     if(string.toLowerCase().contains("settings")) {openSettings();}
                     if(string.toLowerCase().contains("close app")) {exit();}
-                    if(string.toLowerCase().contains(" disable voice commands")) { mSensorManager.unregisterListener(mSensorListener);;}
+                    if(string.toLowerCase().contains(" disable voice")) {
+                        mSensorManager.unregisterListener(mSensorListener);
+                        voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
+                        voiceComBtn.setContentDescription("Enable Voice Commands");
+                    }
                     else{vibrator.vibrate(200);}
                 }
             }
@@ -147,13 +155,13 @@ public class MenuActivity extends AppCompatActivity {
                 toggleVoiceCommands();
                 if(voiceCommands == false) {                      //if voice command in deactivated
                     mSensorManager.unregisterListener(mSensorListener);                    //unregisters sensor manager
-                    Toast.makeText(MenuActivity.this,"Voice Commands Disabled",Toast.LENGTH_SHORT);
-                    voiceComBtn.setBackgroundResource(R.drawable.voiceactivated);           //changes button background
+                    Toast.makeText(MenuActivity.this,"Voice Commands Disabled",Toast.LENGTH_SHORT).show();
+                    voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
                     voiceComBtn.setContentDescription("Enable Voice Commands");             //changes button description
                 }
                 if(voiceCommands == true) {                     //if voice commmand is activated
                     Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);  //register sensor manager
-                    Toast.makeText(MenuActivity.this,"Voice Commands Enabled",Toast.LENGTH_SHORT);
+                    Toast.makeText(MenuActivity.this,"Voice Commands Enabled",Toast.LENGTH_SHORT).show();
                     voiceComBtn.setBackgroundResource(R.drawable.voice_button);
                     voiceComBtn.setContentDescription("Disable Voice Commands");
                 }
@@ -185,7 +193,7 @@ public class MenuActivity extends AppCompatActivity {
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 20) {
+            if (mAccel > sensorSensitivity) {
                 Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
                 speechRecognizer.startListening(intentRecognizer);
             }
@@ -249,6 +257,11 @@ public class MenuActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         voiceCommands = savedInstanceState.getBoolean(savedInstanceState.getString("Voice Command Status"));   //receiving and displaying the value from our saved instance state bundle
+        if(!voiceCommands) {
+            mSensorManager.unregisterListener(mSensorListener);
+            voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
+            voiceComBtn.setContentDescription("Enable Voice Commands");
+        }
     }
 
 }
