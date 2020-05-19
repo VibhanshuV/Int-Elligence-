@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,7 +29,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private boolean voiceCommands = true;
+    private boolean voiceCommands;
     private Vibrator vibrator;              //for haptic feedback
     private Button voiceComBtn;
     //For sensors
@@ -42,6 +43,10 @@ public class MenuActivity extends AppCompatActivity {
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String VOICE_STATUS = "VOICE_STATUS";
+
+
 
 
     @Override
@@ -49,6 +54,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ActivityCompat.requestPermissions(this,new String[] {RECORD_AUDIO}, PackageManager.PERMISSION_GRANTED);
+
+        loadVoiceInteractionState();    //loading voice interaction status
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
         Button objectDetecBtn = findViewById(R.id.objectDetc);
@@ -64,7 +71,9 @@ public class MenuActivity extends AppCompatActivity {
 
         //sensor enabled/disabled according to voiceCommand status
         if(voiceCommands) {sensorSensitivity = 25;}
-        else{sensorSensitivity = 300;}
+        else{sensorSensitivity = 300;
+            voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
+            voiceComBtn.setContentDescription("Enable Voice Commands");}
 
 
         //Setting Up Speech Recognizer
@@ -110,7 +119,7 @@ public class MenuActivity extends AppCompatActivity {
                     if(string.toLowerCase().contains("text")) { openTextRecognizer(); }
                     if(string.toLowerCase().contains("object")) {openObjectDetection();}
                     if(string.toLowerCase().contains("settings")) {openSettings();}
-                    if(string.toLowerCase().contains("close app")) {exit();}
+                    if(string.toLowerCase().contains("close app") || string.toLowerCase().contains("quit")) {exit();}
                     if(string.toLowerCase().contains(" disable voice")) {
                         mSensorManager.unregisterListener(mSensorListener);
                         voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
@@ -237,6 +246,16 @@ public class MenuActivity extends AppCompatActivity {
 
     private void toggleVoiceCommands(){
         voiceCommands = !voiceCommands;
+        if(!voiceCommands){sensorSensitivity = 300;
+            voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
+            voiceComBtn.setContentDescription("Enable Voice Commands");}
+        else {
+            sensorSensitivity = 25;
+            voiceComBtn.setBackgroundResource(R.drawable.voice_button);
+            voiceComBtn.setContentDescription("Disable Voice Commands");
+        }
+
+        saveVoiceInteractionState();
     }
 
     private void openSettings(){
@@ -269,7 +288,22 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         vibrator.vibrate(120);
+        saveVoiceInteractionState();
         super.onBackPressed();
+    }
+
+    //to save and load voice interaction status.
+
+    public void saveVoiceInteractionState() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+         editor.putBoolean(VOICE_STATUS,voiceCommands);
+         editor.apply();
+    }
+
+    public void loadVoiceInteractionState() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        voiceCommands = sharedPreferences.getBoolean(VOICE_STATUS,true);
     }
 
 }

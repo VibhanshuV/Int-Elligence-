@@ -128,7 +128,7 @@ public class SlideViewPagerAdapter extends PagerAdapter {
 
 
                 tutorial_text1.setVisibility(view.VISIBLE);
-                tutorial_text1.setText("Press this button or  say \"OBJECT\" to detect an object in front of your camera");
+                tutorial_text1.setText("Press the Object Detection Button On The Top Left Edge of the screen or say \"Object\"  to detect an object in front of your camera.");
                 tutorial_text2.setVisibility(view.INVISIBLE);
 
 
@@ -149,7 +149,7 @@ public class SlideViewPagerAdapter extends PagerAdapter {
                 ind4.setImageResource(R.drawable.unselected);
 
                 tutorial_text1.setVisibility(view.VISIBLE);
-                tutorial_text1.setText("Press this button or  say \"TEXT\" to recognise the text in front of your camera");
+                tutorial_text1.setText("Press the Text Recognition Button On The Top Right Edge of the screen or say \"Text\" to detect the text in front of your camera by clicking on the text block.");
                 tutorial_text2.setVisibility(view.INVISIBLE);
 
                 tourButton.setEnabled(false);
@@ -171,7 +171,7 @@ public class SlideViewPagerAdapter extends PagerAdapter {
                 tutorial_text1.setVisibility(view.INVISIBLE);
                 tutorial_text1.setText(null);
                 tutorial_text2.setVisibility(view.VISIBLE);
-                tutorial_text2.setText("Press this button to toggle voice commands by shaking your phone");
+                tutorial_text2.setText("Press the Voice Assistant button on the bottom left edge or say \"Enable Voice\" to toggle Voice Assistant Feature. You can start Voice Assistant by shaking your phone.");
                 skipButton.setEnabled(true);
                 skipButton.setVisibility(view.VISIBLE);
 
@@ -194,7 +194,7 @@ public class SlideViewPagerAdapter extends PagerAdapter {
                 tutorial_text1.setVisibility(view.INVISIBLE);
                 tutorial_text1.setText(null);
                 tutorial_text2.setVisibility(view.VISIBLE);
-                tutorial_text2.setText("Press this button or  say \"SETTINGS\" to open up the settings menu");
+                tutorial_text2.setText("Press the settings button on the bottom right edge of the screen or say \"SETTINGS\" to access Accessibility and App info Options");
                 skipButton.setEnabled(false);
                 skipButton.setVisibility(view.INVISIBLE);
                 nextEndButton.setText("End");

@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(voiceCommands){
             sensorSensitivity = 25;
         }
-        
+
 
         //For Sensor
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
