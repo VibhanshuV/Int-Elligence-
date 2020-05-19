@@ -119,10 +119,13 @@ public class ObjectDetection extends AppCompatActivity {
                 waitingDialogue.show();
                 Bitmap bitmap = cameraKitImage.getBitmap();
                 bitmap = Bitmap.createScaledBitmap(bitmap, cameraView.getWidth() , cameraView.getHeight() , false);
-                cameraView.stop();                                                                                              //To stop camera after the image gets captured
-
-                runDetector(bitmap);
-
+                cameraView.stop();                       //To stop camera after the image gets captured
+                if(bitmap == null) {
+                    display.setText("Try again...");
+                }
+                else{
+                    runDetector(bitmap);
+                }
             }
 
             @Override
@@ -152,7 +155,6 @@ public class ObjectDetection extends AppCompatActivity {
         detectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrator.vibrate(100);
                 detect();
             }
         });
@@ -207,8 +209,8 @@ public class ObjectDetection extends AppCompatActivity {
                     if(string.toLowerCase().contains("detect Again")) { detect();}                 //add function and keyword
                     if(string.toLowerCase().contains("detect")) {detect();}                  //add function and keyword
                     if(string.toLowerCase().contains("back")) {onBackPressed();}
-
                 }
+                else{Toast.makeText(ObjectDetection.this, "Try Again!", Toast.LENGTH_SHORT).show();}
             }
 
             @Override
@@ -248,14 +250,16 @@ public class ObjectDetection extends AppCompatActivity {
 
 
     private void detect() {
+        vibrator.vibrate(100);
         display.setText(null);
         cameraView.start();
+        cameraView.toggleFlash();
         cameraView.captureImage();
     }
 
     //function to give voice output
 
-    private void voiceOutput() {
+    private void voiceDetectOutput() {
 
         String text = display.getText().toString();
         TTS.setPitch(1);
@@ -298,9 +302,8 @@ public class ObjectDetection extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         // Task failed with an exception
                         // ...
-                        Toast.makeText(ObjectDetection.this, "No lable found", Toast.LENGTH_SHORT).show();
-                        display.setText("No lable found");
-                        voiceOutput();
+//                        Toast.makeText(ObjectDetection.this, "No lable found", Toast.LENGTH_SHORT).show();
+                        display.setText("No label found");
                     }
                 });
     }
@@ -322,14 +325,11 @@ public class ObjectDetection extends AppCompatActivity {
             string2 = string1.substring(0,string1.length()-1);
             display.setText(string2);
 
-        }
-        else {                                                  //if labels are null
-            display.setText("No Objects Detected!");
-        }
+        } else {display.setText("No Objects Detected");}
 
         if(waitingDialogue.isShowing())                                                             //to remove waiting dialogue
             waitingDialogue.dismiss();
-        voiceOutput();         //to give voice output of detected labels
+         voiceDetectOutput();                                                //to give voice output of detected labels
     }
 
     /**To handle orientation changes

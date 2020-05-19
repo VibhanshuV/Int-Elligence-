@@ -10,11 +10,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
     private boolean voiceCommands = false;//voice command status
     private float sensorSensitivity = 300;
     private Vibrator vibrator;
+    private Button appInfoButton, talkBackButton;
 
 
     @Override
@@ -53,6 +57,29 @@ public class SettingsActivity extends AppCompatActivity {
         if(voiceCommands){
             sensorSensitivity = 25;
         }
+
+        appInfoButton = findViewById(R.id.appInfoBtn);
+        talkBackButton = findViewById(R.id.accessBtn);
+
+        //to open app info and talk back feature
+
+        appInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                gotoAppInfo();
+
+            }
+        });
+
+        talkBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                gotoTalkBack();
+
+            }
+        });
 
 
         //For Sensor
@@ -104,9 +131,9 @@ public class SettingsActivity extends AppCompatActivity {
                     string = matches.get(0);
                     if(string.toLowerCase().contains("talkback")) {gotoTalkBack();}                 //add function and keyword
                     if(string.toLowerCase().contains("App Info")) {gotoAppInfo();}                  //add function and keyword
-                    if(string.toLowerCase().contains("back")) {goBack();}
-
+                    if(string.toLowerCase().contains("back") || string.toLowerCase().contains("exit")) {onBackPressed();}
                 }
+                else{Toast.makeText(SettingsActivity.this, "Try Again!", Toast.LENGTH_SHORT).show();}
             }
 
             @Override
@@ -123,11 +150,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    private void gotoAppInfo() {
+    private void gotoAppInfo() {                    //opens application manager
+
+        startActivityForResult(new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS), 0);
 
     }
 
-    private void gotoTalkBack() {
+    private void gotoTalkBack() {                    //opens accessibility settings
+
+        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 0);
+
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
@@ -164,13 +196,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onPause();
     }
 
-
-    private void goBack() {    //to finish this activity
-        finish();
-    }
-
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {                      //finish this activity
         vibrator.vibrate(120);
         super.onBackPressed();
     }

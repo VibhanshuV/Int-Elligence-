@@ -125,8 +125,8 @@ public class MenuActivity extends AppCompatActivity {
                         voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
                         voiceComBtn.setContentDescription("Enable Voice Commands");
                     }
-                    else{vibrator.vibrate(200);}
                 }
+                else{Toast.makeText(MenuActivity.this, "Try Again!", Toast.LENGTH_SHORT).show();}
             }
 
             @Override
@@ -146,7 +146,6 @@ public class MenuActivity extends AppCompatActivity {
         objectDetecBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               vibrator.vibrate(70);          //haptic feedback
                 openObjectDetection();
             }
 
@@ -154,7 +153,7 @@ public class MenuActivity extends AppCompatActivity {
         textReconBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrator.vibrate(70);
+
                 openTextRecognizer();
             }
 
@@ -162,7 +161,6 @@ public class MenuActivity extends AppCompatActivity {
         voiceComBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrator.vibrate(500);
                 toggleVoiceCommands();
                 if(voiceCommands == false) {                      //if voice command in deactivated
                     mSensorManager.unregisterListener(mSensorListener);                    //unregisters sensor manager
@@ -182,7 +180,6 @@ public class MenuActivity extends AppCompatActivity {
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrator.vibrate(70);
                 openSettings();
             }
         });
@@ -194,7 +191,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    private final SensorEventListener mSensorListener = new SensorEventListener() {
+    private final SensorEventListener mSensorListener = new SensorEventListener() {                       //sensor reads values
         @Override
         public void onSensorChanged(SensorEvent event) {
             float x = event.values[0];
@@ -204,7 +201,7 @@ public class MenuActivity extends AppCompatActivity {
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > sensorSensitivity) {
+            if (mAccel > sensorSensitivity) {                            //if maccel is greater than sensorSensitvity
                 Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
                 speechRecognizer.startListening(intentRecognizer);
             }
@@ -229,6 +226,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void openObjectDetection(){
+        vibrator.vibrate(100);          //haptic feedback
         Intent objDetector = new Intent(MenuActivity.this,ObjectDetection.class);
         objDetector.putExtra("Voice Command Status",voiceCommands);                             //sending the status of voice command(enabled/disabled) to objDetector activity
         //Intents to  ObjectDetection Activity
@@ -237,6 +235,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void openTextRecognizer(){
+        vibrator.vibrate(100);          //haptic feedback
         Intent txtRecognition = new Intent(MenuActivity.this,OcrCaptureActivity.class);
         txtRecognition.putExtra("Voice Command Status",voiceCommands);                           //sending the status of voice command(enabled/disabled) to textRecognizer activity
         //Intents to Te OcrCaptureActivity
@@ -245,6 +244,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void toggleVoiceCommands(){
+        vibrator.vibrate(500);
         voiceCommands = !voiceCommands;
         if(!voiceCommands){sensorSensitivity = 300;
             voiceComBtn.setBackgroundResource(R.drawable.voicedeactivated);           //changes button background
@@ -259,13 +259,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void openSettings(){
+        vibrator.vibrate(100);          //haptic feedback
         Intent settingsMenu = new Intent(MenuActivity.this,SettingsActivity.class);     //sending the status of voice command(enabled/disabled) to Settings activity
         settingsMenu.putExtra("Voice Command Status",voiceCommands);
         //Intents to Settings Activity
         startActivity(settingsMenu);
-////
-//        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_SETTINGS), 0);  //to go to app info
-//        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 0); //for accesibility setting
     }
 
 
@@ -286,7 +284,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {                         //when back button is pressed (from navigation bar)
         vibrator.vibrate(120);
         saveVoiceInteractionState();
         super.onBackPressed();
