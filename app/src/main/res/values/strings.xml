@@ -17,4 +17,10 @@
     <string name="voice_assistant">Voice Assistant</string>
     <string name="settings">Settings</string>
     <string name="detect_object">Detect Object</string>
+    <string name="enable_voice_assistant">Enable Voice Assistant</string>
+    <string name="open_object_detection">Open Object Detection</string>
+    <string name="open_text_detection">Open Text Detection</string>
+    <string name="detect">DETECT</string>
+    <string name="detected_objects">Detected Objects</string>
+    <string name="disable_voice_commands">Disable Voice Commands</string>
 </resources>

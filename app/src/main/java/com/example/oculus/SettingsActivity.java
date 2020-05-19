@@ -34,4 +34,5 @@ public class SettingsActivity extends AppCompatActivity {
             pitch = 0.1f;
     }
 
+
 }

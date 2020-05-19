@@ -51,7 +51,7 @@
 
     <Button
         android:id="@+id/voiceCom"
-        android:contentDescription="@string/voice_assistant"
+        android:contentDescription="@string/disable_voice_commands"
         android:layout_width="138dp"
         android:layout_height="159dp"
         android:layout_marginStart="16dp"
@@ -95,6 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintGuide_percent="0.5143639"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

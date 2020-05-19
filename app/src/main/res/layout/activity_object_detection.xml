@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="#4DA489"
         android:backgroundTint="#4DA489"
-        android:text="DETECT"
+        android:text="@string/detect"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +51,7 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/round_corners"
             android:gravity="center"
-            android:hint="Detected Objects"
+            android:hint="@string/detected_objects"
             android:textColor="#FFFFFF"
             android:textSize="32sp" />
 

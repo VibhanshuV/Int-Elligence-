@@ -11,7 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import androidx.annotation.NonNull;
 
@@ -36,7 +43,9 @@ import com.example.oculus.camera.CameraSourcePreview;
 import com.example.oculus.camera.GraphicOverlay;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Activity for the Ocr Detecting app.  This app detects text and displays the value with the
@@ -67,6 +76,16 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
     // A TextToSpeech engine for speaking a String value.
     private TextToSpeech tts;
+
+    //For sensors
+    private SensorManager mSensorManager;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
+
+    //for speech recognition
+    private SpeechRecognizer speechRecognizer;
+    private Intent intentRecognizer;
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -115,7 +134,97 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                     }
                 };
         tts = new TextToSpeech(this.getApplicationContext(), listener);
+
+        //For Sensor
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        mAccel = 10f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
+
+        //Setting Up Speech Recognizer
+        intentRecognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        speechRecognizer = speechRecognizer.createSpeechRecognizer(this);
+        speechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+
+            }
+
+            @Override
+            public void onRmsChanged(float rmsdB) {
+
+            }
+
+            @Override
+            public void onBufferReceived(byte[] buffer) {
+
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+
+            }
+
+            @Override
+            public void onError(int error) {
+            }
+
+            @Override
+            public void onResults(Bundle results) {
+                ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                String string = null;
+                if(matches!=null){
+                    string = matches.get(0);
+                    if(string.toLowerCase().contains("back")) { goBack(); }
+                    else{tts.setSpeechRate(0.8f);
+                        tts.setPitch(1);
+                        tts.speak("Please Try Again!", TextToSpeech.QUEUE_ADD, null, "DEFAULT");}
+                }
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+
+            }
+        });
     }
+
+    private void goBack() {
+        finish();
+    }
+
+    private final SensorEventListener mSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            mAccelLast = mAccelCurrent;
+            mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+            float delta = mAccelCurrent - mAccelLast;
+            mAccel = mAccel * 0.9f + delta;
+            if (mAccel > 20) {
+                Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
+                speechRecognizer.startListening(intentRecognizer);
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    };
+
 
     /**
      * Handles the requesting of the camera permission.  This includes
@@ -193,6 +302,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      */
     @Override
     protected void onResume() {
+        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
         super.onResume();
         startCameraSource();
     }
@@ -202,6 +313,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      */
     @Override
     protected void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
         if (preview != null) {
             preview.stop();
