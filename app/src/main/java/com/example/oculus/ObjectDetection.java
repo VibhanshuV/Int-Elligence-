@@ -77,6 +77,7 @@ public class ObjectDetection extends AppCompatActivity {
         cameraView.stop();                                                                          //to stop camera (when the activity gets paused)
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,7 +224,7 @@ public class ObjectDetection extends AppCompatActivity {
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
             if (mAccel > 20) {
-                Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
                 speechRecognizer.startListening(intentRecognizer);
             }
         }

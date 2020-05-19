@@ -15,6 +15,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,8 +32,10 @@ public class SettingsActivity extends AppCompatActivity {
     //for speech recognition
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
-
+    private boolean voiceCommands;                //voice command status
     private Vibrator vibrator;
+    float speed, pitch;
+    SeekBar seekBar_speed, seekBar_pitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,11 @@ public class SettingsActivity extends AppCompatActivity {
         //to make navigation bar transparent
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.TYPE_STATUS_BAR);
+
+        //z
+
+        seekBar_pitch = findViewById(R.id.seek_bar1);
+        seekBar_speed = findViewById(R.id.seek_bar2);
 
         //For Sensor
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -80,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onError(int error) {
-                vibrator.vibrate(200);
+
             }
 
             @Override
@@ -92,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
                     if(string.toLowerCase().contains("")) { }                 //add function and keyword
                     if(string.toLowerCase().contains("")) {}                  //add function and keyword
                     if(string.toLowerCase().contains("back")) {goBack();}
-                    else{vibrator.vibrate(200);}
+
                 }
             }
 
@@ -121,7 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
             if (mAccel > 20) {
-                Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
                 speechRecognizer.startListening(intentRecognizer);
             }
         }
@@ -144,8 +152,22 @@ public class SettingsActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    public void setValueOfSpeedAndPitch(){
+        speed = (float) seekBar_speed.getProgress()/50;
+        if(speed<0.1)
+            speed = 0.1f;
+
+        pitch = (float) seekBar_pitch.getProgress()/50;
+        if(pitch<0.1)
+            pitch = 0.1f;
+    }
+
     private void goBack() {    //to finish this activity
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

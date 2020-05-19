@@ -215,7 +215,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
             if (mAccel > 20) {
-                Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Say Something", Toast.LENGTH_SHORT).show();
                 speechRecognizer.startListening(intentRecognizer);
             }
         }
