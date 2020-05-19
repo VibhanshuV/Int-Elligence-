@@ -25,10 +25,10 @@
     <string name="disable_voice_commands">Disable Voice Commands</string>
     <string name="back">Back</string>
     <string name="skip">Skip</string>
-    <string name="object_button_description">Press the Object Detection Button On The Top Left Edge of the screen or say \"Object\"  to detect an object in front of your camera.</string>
-    <string name="text_recogbtn_descriptionn">Press the Text Recognition Button On The Top Right Edge of the screen or say "Text" to detect the text in front of your camera by clicking on the text block.</string>
-    <string name="voice_assist_button_description">Press the Voice Assistant button on the bottom left edge or say "Enable Voice" to toggle Voice Assistant Feature. You can start Voice Assistant by shaking your phone.</string>
-    <string name="settings_btn_description">Press the settings button on the bottom right edge of the screen or say "SETTINGS" to access Accessibility and App info Options</string>
+    <string name="object_button_description">Press the object detection button on the top left edge of the screen or say \"Object\"  to detect an object in front of your camera.</string>
+    <string name="text_recogbtn_descriptionn">Press the text recognition button on the top right edge of the screen or say \"Text\" to detect the text in front of your camera and click on the text to get voice output.</string>
+    <string name="voice_assist_button_description">Press the voice assistant button on the bottom left edge or say \"Enable Voice\" to toggle voice assistant feature. You can start voice assistant by shaking your phone.</string>
+    <string name="settings_btn_description">press the settings button on the bottom right edge of the screen or say "Settings" to access accessibility and app info options</string>
     <string name="take_a_tour">Take a tour →</string>
     <string name="next">Next</string>
     <string name="next_slide">Next Slide</string>

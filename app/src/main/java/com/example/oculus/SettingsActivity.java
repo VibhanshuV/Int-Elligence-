@@ -151,13 +151,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void gotoAppInfo() {                    //opens application manager
-
+        vibrator.vibrate(150);
         startActivityForResult(new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS), 0);
 
     }
 
     private void gotoTalkBack() {                    //opens accessibility settings
-
+        vibrator.vibrate(150);
         startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 0);
 
     }
