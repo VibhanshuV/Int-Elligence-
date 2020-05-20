@@ -8,7 +8,6 @@
 
     <Button
         android:id="@+id/button_detect"
-        android:contentDescription="@string/detect_object"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#4DA489"
@@ -51,7 +50,7 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/round_corners"
             android:gravity="center"
-            android:hint="@string/detected_objects"
+
             android:textColor="#FFFFFF"
             android:textSize="32sp" />
 

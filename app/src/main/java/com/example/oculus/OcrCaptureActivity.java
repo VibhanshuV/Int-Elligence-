@@ -525,8 +525,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        tts.stop();
-        tts.shutdown();
+        tts.stop();                           //to stop text to speech
+        tts.shutdown();                       //to shutdown tts
         vibrator.vibrate(170);
         super.onBackPressed();
     }
