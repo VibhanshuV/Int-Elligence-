@@ -342,6 +342,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
+        tts.stop();                           //to stop text to speech
+        tts.shutdown();
         super.onDestroy();
         if (preview != null) {
             preview.release();

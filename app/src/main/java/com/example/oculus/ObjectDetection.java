@@ -72,7 +72,7 @@ public class ObjectDetection extends AppCompatActivity {
         mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
         super.onResume();
-        cameraView.start();                                                                         //to start camera
+        cameraView.start();                                                                          //to start camera
     }
 
     @Override
@@ -207,7 +207,7 @@ public class ObjectDetection extends AppCompatActivity {
                 if(matches!=null){
                     string = matches.get(0);
                     if(string.toLowerCase().contains("detect Again")) { detect();}                 //add function and keyword
-                    if(string.toLowerCase().contains("detect")) {detect();}                  //add function and keyword
+                    if(string.toLowerCase().contains("detect")) {detect();}                         //add function and keyword
                     if(string.toLowerCase().contains("back")) {onBackPressed();}
                 }
                 else{Toast.makeText(ObjectDetection.this, "Try Again!", Toast.LENGTH_SHORT).show();}
