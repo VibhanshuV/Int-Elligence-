@@ -1,10 +1,5 @@
-# Oculus-
-Oculus-An app for the visually impaired.
+# Oculus
 
-The main branch of the this repo contains the android studio project ffor occulus.
-Currently these are the features in the app:-
-
-Text Recognition (text to Speech on click the text on the screen)
-Main Menu
-Spalsh Screens
+Oculus is an android app for the visually impaired that we created in our first for Devjam.
+The app helps people who are visually impared to identify objects and read text that are infront of them using camera.
 
