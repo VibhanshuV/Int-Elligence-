@@ -1,4 +1,4 @@
-# Int-Elligence-
+# Oculus-
 Oculus-An app for the visually impaired.
 
 The main branch of the this repo contains the android studio project ffor occulus.
